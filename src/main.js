@@ -1,19 +1,20 @@
+let express = require('express')
+
 let lib = require('./lib')
 
-console.log(lib.data)
-lib.printSelf()
+const app = express()
 
-let counter = 0
-setInterval(() => {
-  counter += 1
-  console.log(counter)
-}, 2000)
+app
+  .get('/', (req, res) => {
+    res.end(lib)
+  })
+
+app.listen(3000, () => {
+  console.log('server listening on port 3000');
+})
 
 if (module.hot) {
   module.hot.accept('./lib', () => {
     lib = require('./lib')
-
-    console.log(lib.data)
-    lib.printSelf()
   })
 }
